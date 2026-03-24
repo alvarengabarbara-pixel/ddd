@@ -1,0 +1,45 @@
+// Selecionando os botões de opção
+const botoes = document.querySelectorAll('.opcao');
+
+// Função para manipular as escolhas
+function manipularEscolha(evento) {
+    const opcaoEscolhida = evento.target.getAttribute('data-opcao');
+    const descricao = document.getElementById('descricao');
+    
+    if (opcaoEscolhida === 'explorar') {
+        descricao.textContent = "Você se aventurou pela floresta e encontrou uma cabana misteriosa. O que você fará agora?";
+        atualizarOpcoes('investigar', 'voltar');
+    } else if (opcaoEscolhida === 'voltar') {
+        descricao.textContent = "Você voltou para a vila em segurança. Fim da aventura!";
+        desativarOpcoes();
+    }
+}
+
+// Função para atualizar as opções após uma escolha
+function atualizarOpcoes(opcao1, opcao2) {
+    const opcoesDiv = document.getElementById('opcoes');
+    opcoesDiv.innerHTML = `
+        <button class="opcao" data-opcao="${opcao1}">${opcao1 === 'investigar' ? 'Investigar a cabana' : 'Voltar para a floresta'}</button>
+        <button class="opcao" data-opcao="${opcao2}">${opcao2 === 'voltar' ? 'Voltar para a vila' : 'Explorar mais'}</button>
+    `;
+    adicionarEventosBotao();
+}
+
+// Função para desativar os botões ao fim da aventura
+function desativarOpcoes() {
+    const opcoesDiv = document.getElementById('opcoes');
+    opcoesDiv.innerHTML = `<button class="opcao" disabled>Fim da Aventura</button>`;
+}
+
+// Função para adicionar eventos de clique aos botões
+function adicionarEventosBotao() {
+    const botoesAtualizados = document.querySelectorAll('.opcao');
+    botoesAtualizados.forEach(botao => {
+        botao.addEventListener('click', manipularEscolha);
+    });
+}
+
+// Adicionando os eventos aos botões iniciais
+botoes.forEach(botao => {
+    botao.addEventListener('click', manipularEscolha);
+});
